@@ -1,5 +1,6 @@
 package com.example.Motorola_HR_app.controller;
 
+import com.example.Motorola_HR_app.model.Employee;
 import com.example.Motorola_HR_app.service.EmployeeService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -38,7 +39,7 @@ public class EmployeeController {
 
     }
 
-    @GetMapping("/EmployeeForm")
+    @GetMapping("/employeeForm")
     public String showNewEmployeeForm(Model model) {
 
         Employee employee = new Employee();
@@ -46,9 +47,8 @@ public class EmployeeController {
         return "new_employee";
     }
 
-    @PostMapping("/Employees")
+    @PostMapping("/employees")
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
-
         employeeService.saveEmployee(employee);
         return "redirect:/";
     }
