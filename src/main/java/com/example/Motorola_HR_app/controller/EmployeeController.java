@@ -7,23 +7,22 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @Controller
 public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    @GetMapping("/")
-    public String viewHomePage() {
-        return "home";
-    }
-
 
     @GetMapping("/employees")
     public String getAllEmployees(Model model) {
-        model.addAttribute("products", employeeService.getAllEmployees());
+        List<Employee> employeeList = employeeService.getAllEmployees();
+        model.addAttribute("employees", employeeService.getAllEmployees());
         return "employess";
     }
+
 
     @GetMapping("/employees/{id}")
     public String getEmployeeById(@PathVariable("id") long id, Model model) {
@@ -35,9 +34,10 @@ public class EmployeeController {
     @DeleteMapping("/employees/{id}")
     public String deleteEmployee(@PathVariable(value = "id") long id) {
         employeeService.deleteEmployeeById(id);
-        return "redirect: employeees";
+        return "redirect:employees";
 
     }
+
 
     @GetMapping("/employeeForm")
     public String showNewEmployeeForm(Model model) {
@@ -47,10 +47,11 @@ public class EmployeeController {
         return "new_employee";
     }
 
+
     @PostMapping("/employees")
     public String saveEmployee(@ModelAttribute("employee") Employee employee) {
         employeeService.saveEmployee(employee);
-        return "redirect:/";
+        return "redirect:employees";
     }
 
 }
